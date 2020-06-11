@@ -33,7 +33,7 @@ function Home({navigation}) {
         />
         <TextInput
           style={styles.textinput}
-          placeholder="Passwrd"
+          placeholder="Password"
           onChangeText={text => setPassword(text)}
           defaultValue={password}
         />
