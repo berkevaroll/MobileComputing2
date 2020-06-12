@@ -10,7 +10,7 @@ function MapScreen({ navigation}) {
 
 		<Button color="orange" title="Go to About" onPress={() => navigation.navigate('About')} />
 		</View>
-		);
+		); 
 }
 
 export default MapScreen;
