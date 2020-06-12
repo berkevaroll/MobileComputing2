@@ -46,6 +46,7 @@ function actionOnRow(item, navigation){
 	navigation.navigate('Detail', item);
 }
 function NoteScreen({ navigation }) {
+
 	const notes = getupdatedata(query);
 	return (
 		<View style={ styles.MainContainer }>
@@ -58,9 +59,9 @@ function NoteScreen({ navigation }) {
 							<View style={{flex: 1, flexDirection: 'column'}}>
 								<Text style={styles.texttitle}>{item.title}</Text>
 								<Text style={styles.textloc}>{item.location}</Text>
-							</View>					
+							</View>
 							<View style={{flex: 1, alignItems: 'flex-end'}}>
-								<Text style={styles.textdate}> String(item.date.getDate()) + '/' + String(item.date.getMonth()+1) +'/'+String(item.date.getFullYear())} </Text>
+								<Text style={styles.textdate}> {String(item.date.getDate())} / {String(item.date.getMonth()+1)} /{String(item.date.getFullYear())} </Text>
 							</View>
 						</View>
 					</TouchableWithoutFeedback>

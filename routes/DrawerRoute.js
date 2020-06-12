@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import StackList from './StackList';
 import StackMap from './StackMap';
-import About from './../Screens/About';
+import Home from './../Screens/Home';
 import Add from './../Screens/AddNote';
 import Detail from './../Screens/Detail';
 import Update from './../Screens/Update';
@@ -15,10 +15,9 @@ export default function DrawerRoute({navigation}) {
 		<Drawer.Navigator>
 			<Drawer.Screen name="List" component={StackList} />
 			<Drawer.Screen name="Map" component={StackMap} />
-			<Drawer.Screen name="About" component={About} />
+			<Drawer.Screen name="Login" component={Home}/>
 			<Drawer.Screen name="Insert" component={Add} />
 			<Drawer.Screen name="Detail" component={Detail} />
-			<Drawer.Screen name="Update" component={Update} />
 		</Drawer.Navigator>
 	);
 }

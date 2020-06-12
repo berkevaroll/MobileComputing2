@@ -29,7 +29,7 @@ function StackList({navigation}) {
 				 	headerRight: () => (
 				 		<TouchableOpacity
 				 			style={styles.button}
-				 			onPress={() => navigation.navigate('Insert')}>
+				 			onPress={() => navigation.navigate('Insert') }>
 				 			<Text>Add Note</Text>
 				 		</TouchableOpacity>
 				 	),
@@ -38,7 +38,7 @@ function StackList({navigation}) {
 				<Stack.Screen name="Insert"
 				 component={Insert}
 				 options={({ navigation }) => ({
-				 title: 'My Notes',
+				 title: 'Add Note',
 				 headerLeft: null,
 			 	 headerStyle:{
 			 		backgroundColor: '#ffdead',
@@ -46,13 +46,28 @@ function StackList({navigation}) {
 			 	 headerTintColor: '#ff6347',
 			 	 headerTitleStyle:{
 			 		 fontWeight: 'bold',
-			 	 },	
+			 	 },
 			 })}
 			/>
-			<Stack.Screen name="Detail" component={Details}/>
-			<Stack.Screen name="Update" component={Update}/>
-			<Stack.Screen name="About" component={About}/>
-		</Stack.Navigator>			
+				<Stack.Screen name="Detail"
+			 component={Details}
+			 options={({ navigation }) => ({
+			 title: 'Note Details',
+			 headerLeft: null,
+			 headerStyle:{
+				backgroundColor: '#ffdead',
+			 },
+			 headerTintColor: '#ff6347',
+			 headerTitleStyle:{
+				 fontWeight: 'bold',
+			 },
+		 })}
+			 />
+				<Stack.Screen name="Update"
+				 component={Update}/>
+				<Stack.Screen name="About"
+				 component={About}/>
+		</Stack.Navigator>
 	);
 }
 

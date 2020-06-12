@@ -18,7 +18,7 @@ function StackLogin({navigation}) {
 				<Stack.Screen name="Other" component={Other} options={{headerShown : false,}}/>
 				<Stack.Screen name="DrawerRoute" component={DrawerRoute} options={{headerShown : false,}}/>
 			</Stack.Navigator>
-		</NavigationContainer>			
+		</NavigationContainer>
 	);
 }
 

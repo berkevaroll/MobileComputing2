@@ -16,11 +16,10 @@ function Update({ route, navigation }) {
 	const [title1, setTitle1] = useState(title);
 	const [content1, setContent1] = useState(content);
 	const [location1, setLocation1] = useState(location);
-	
+
 	function update(){
 		if(title1 && content1 && location1) {
 			realm = new Realm({ path: 'notes.realm' });
-
 			realm.write(() => {
 				var obj = realm
 				.objects('notes')
@@ -35,8 +34,6 @@ function Update({ route, navigation }) {
 				[
 					{
 						text: 'OK',
-						onPress: () =>
-							navigation.dispatch(StackActions.popToTop())
 					},
 				],
 				{ cancelable: false}
