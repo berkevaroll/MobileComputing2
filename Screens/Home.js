@@ -6,6 +6,8 @@ import {
   Text,
   Button,
   TextInput,
+  Alert,
+  TouchableOpacity
 } from 'react-native';
 import styles  from './../stylesheet/styles1';
 import { StackActions } from '@react-navigation/native';
@@ -16,6 +18,46 @@ function Home({navigation}) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+
+function UserLoginFunction (){
+
+fetch('http://192.168.0.113/React/v1/login.php', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+
+    username: username,
+
+    password: password
+
+  })
+
+}).then((response) => response.json())
+      .then((responseJson) => {
+
+        // If server response message same as Data Matched
+       if(responseJson === 'Data Matched')
+        {
+
+          navigation.dispatch(StackActions.replace('Maps'));
+
+        }
+        else{
+
+          Alert.alert(responseJson);
+        }
+
+      }).catch((error) => {
+        console.error(error);
+      });
+
+  }
+
+
   return(
 	<View style={styles.body}>
       <View style={styles.part1}>
@@ -41,9 +83,15 @@ function Home({navigation}) {
           <Button
             color="blue"
             title="Login"
-            onPress={() => navigation.dispatch(StackActions.replace('Other'))}
+            onPress={() => UserLoginFunction()}
           />
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')} >
+
+            <Text style={styles.textopacity}> Don't have an account? Click here to register. </Text>
+
+          </TouchableOpacity>
         </View>
+
       </View>
       <View style={styles.part3}>
         <Button
@@ -51,10 +99,11 @@ function Home({navigation}) {
           title="My Notes"
           onPress={() => navigation.navigate('DrawerRoute')}
         />
+
+
       </View>
     </View>
 	);
 }
 
 export default Home;
-

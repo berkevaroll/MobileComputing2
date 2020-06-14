@@ -1,16 +1,46 @@
 import React from 'react';
-import { View, Text, Button, TextInput, Image, SafeAreaView } from 'react-native';
+import { View,Alert, Text, Button, TextInput, StyleSheet, Image, SafeAreaView } from 'react-native';
 
-function MapScreen({ navigation}) {
-/*	const { param1 } = route.params;
-	const { test } = route.params;*/
-	return (
-		<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-		<Text>Notes will be here!!</Text>
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 
-		<Button color="orange" title="Go to About" onPress={() => navigation.navigate('About')} />
-		</View>
-		); 
+export default function MapScreen(){
+
+	function pressCallOut (){
+		Alert.alert('Hosgeldin bubam');
+	}
+
+return(
+	<View style={styles.container}>
+		<MapView
+			provider={PROVIDER_GOOGLE}
+			style={styles.map}
+			region={{
+				latitude: 37.78825,
+				longitude: -122.4324,
+				latitudeDelta: 0.015,
+				longitudeDelta: 0.0121,
+			}}
+		>
+
+		<Marker
+			key={'Marker'}
+			coordinate={{latitude: 37.78825,longitude: -122.4324}}
+			title={'description'}>
+				<Callout onPress={() => pressCallOut()}>
+					<Text>deneme aciklamasi</Text>
+				</Callout>
+		</Marker>
+		</MapView>
+	</View>
+);
 }
 
-export default MapScreen;
+const styles = StyleSheet.create({
+	container: {
+		...StyleSheet.absoluteFillObject,
+		height: '100%',
+	},
+	map: {
+		...StyleSheet.absoluteFillObject,
+	},
+});
