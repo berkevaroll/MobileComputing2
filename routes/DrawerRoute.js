@@ -14,10 +14,9 @@ export default function DrawerRoute({navigation}) {
 	return (
 		<Drawer.Navigator>
 			<Drawer.Screen name="List" component={StackList} />
-			<Drawer.Screen name="Map" component={StackMap} />
+
 			<Drawer.Screen name="Login" component={Home}/>
 			<Drawer.Screen name="Insert" component={Add} />
-			<Drawer.Screen name="Detail" component={Detail} />
 		</Drawer.Navigator>
 	);
 }

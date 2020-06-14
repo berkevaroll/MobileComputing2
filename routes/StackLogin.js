@@ -5,8 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './../Screens/Home';
-import Other from './../Screens/Other';
+import Register from './../Screens/Register';
 import DrawerRoute from './DrawerRoute';
+import Maps from './../routes/StackMap';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,8 @@ function StackLogin({navigation}) {
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName="Login">
 				<Stack.Screen name="Login" component={Login} options={{headerShown : false,}}/>
-				<Stack.Screen name="Other" component={Other} options={{headerShown : false,}}/>
+				<Stack.Screen name="Register" component={Register} options={{headerShown : false,}}/>
+				<Stack.Screen name="Maps" component={Maps} options={{headerShown : false,}}/>
 				<Stack.Screen name="DrawerRoute" component={DrawerRoute} options={{headerShown : false,}}/>
 			</Stack.Navigator>
 		</NavigationContainer>

@@ -29,6 +29,11 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 25,
   },
+  textopacity: {
+    color: 'black',
+    fontSize: 14,
+    alignItems: 'center',
+  },
   textinput: {
     width: 250,
     height: 40,
