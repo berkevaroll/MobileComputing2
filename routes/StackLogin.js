@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './../Screens/Home';
 import Register from './../Screens/Register';
 import DrawerRoute from './DrawerRoute';
-import Maps from './../Screens/MapScreen';
+import Maps from './../routes/StackMap';
 
 const Stack = createStackNavigator();
 
