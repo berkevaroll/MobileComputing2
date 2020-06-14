@@ -52,13 +52,39 @@ function EditMarker({navigation,route}) {
           if(responseJson === 'Marker Updated Successfully')
            {
 
-             navigation.dispatch(StackActions.popToTop());
+             navigation.dispatch(StackActions.replace('Map'));
 
            }
         }).catch((error) => {
           console.error(error);
         });
     }
+    function deleteMarker (){
+
+        fetch('http://192.168.0.113/React/v1/deletemarker.php', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+
+            id: _id
+          })
+
+        }).then((response) => response.json())
+          .then((responseJson) => {
+            Alert.alert(responseJson);
+            if(responseJson === 'Marker is Removed Successfully')
+             {
+
+               navigation.dispatch(StackActions.replace('Map'));
+
+             }
+          }).catch((error) => {
+            console.error(error);
+          });
+      }
   return(
 
 	<View style={styles.body}>
@@ -86,6 +112,11 @@ function EditMarker({navigation,route}) {
             color="blue"
             title="Update Marker"
             onPress={() => updateMarker()}
+          />
+          <Button
+            color="blue"
+            title="Remove Marker"
+            onPress={() => deleteMarker()}
           />
 
         </View>

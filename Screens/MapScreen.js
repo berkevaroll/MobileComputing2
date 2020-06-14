@@ -1,6 +1,7 @@
 import React, {useEffect, useState, Component} from 'react';
 import { View,Alert, Text, Button, TextInput, StyleSheet, Image, SafeAreaView } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
+import { StackActions } from '@react-navigation/native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 let markersURL = 'http://192.168.0.113/React/v1/getmarkers.php'
 export default class MapScreen extends Component {
@@ -72,10 +73,11 @@ export default class MapScreen extends Component {
 
 	}
 	navigateAdd = (e) => {
-		 this.props.navigation.navigate('AddMarker', {paramlng: e.nativeEvent.coordinate.longitude,paramlat:e.nativeEvent.coordinate.latitude});
+		this.props.navigation.dispatch(StackActions.replace('AddMarker', {paramlng: e.nativeEvent.coordinate.longitude,paramlat:e.nativeEvent.coordinate.latitude}));
+		// this.props.navigation.navigate('AddMarker', {paramlng: e.nativeEvent.coordinate.longitude,paramlat:e.nativeEvent.coordinate.latitude});
 	}
 	navigateEdit = (e,marker) => {
-		 this.props.navigation.navigate('Edit', {_title: marker.title,_desc: marker.description,_id:marker.id});
+		 this.props.navigation.dispatch(StackActions.replace('Edit', {_title: marker.title,_desc: marker.description,_id:marker.id}));
 	}
 	pressCallOut = () => {
 		Alert.alert('Hosgeldin bubam');
@@ -84,7 +86,8 @@ export default class MapScreen extends Component {
 		this.watchID != null && Geolocation.clearWatch(this.watchId);
 	}
 	render(){
-		this.webService();
+		// const user_name = navigation.getParam('_id', '');
+		//this.webService();
 		return(
 		<View style={styles.container}>
 			<MapView

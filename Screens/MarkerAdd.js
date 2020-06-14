@@ -18,11 +18,12 @@ function MarkerAdd({navigation,route}) {
 
   const {paramlng}=route.params;
   const{paramlat}=route.params;
+  const{_markerid}=route.params;
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const lng = paramlng;
   const lat = paramlat;
-  const userid = 55;
+  const userid = _markerid;
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   // const [lng, setLng] = useState(true);
@@ -57,7 +58,7 @@ function MarkerAdd({navigation,route}) {
           if(responseJson === 'Marker Added Successfully')
            {
 
-             navigation.dispatch(StackActions.popToTop());
+             navigation.dispatch(StackActions.replace('Map'));
 
            }
         }).catch((error) => {
