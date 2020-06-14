@@ -1,12 +1,14 @@
-import React, {useEffect, useState, Component} from 'react';
+import React, {useEffect, useState, Component, useContext} from 'react';
 import { View,Alert, Text, Button, TextInput, StyleSheet, Image, SafeAreaView } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import { StackActions } from '@react-navigation/native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
+import {LocalizationContext} from '../services/localization/LocalizationContext';
 let markersURL = 'http://192.168.0.113/React/v1/getmarkers.php'
 export default class MapScreen extends Component {
-
+	static contextType = LocalizationContext
 	constructor(props){
+
 		super(props);
 		this.state = {
 				data:[],
@@ -22,6 +24,8 @@ export default class MapScreen extends Component {
 
 	watchId: ?number = null
 	componentDidMount(){
+
+		const translations = this.context;
 		Geolocation.getCurrentPosition(
 			position => {
 				var lat = parseFloat(position.coords.latitude)
@@ -79,13 +83,12 @@ export default class MapScreen extends Component {
 	navigateEdit = (e,marker) => {
 		 this.props.navigation.dispatch(StackActions.replace('Edit', {_title: marker.title,_desc: marker.description,_id:marker.id}));
 	}
-	pressCallOut = () => {
-		Alert.alert('Hosgeldin bubam');
-	}
 	componentWillUnmount() {
 		this.watchID != null && Geolocation.clearWatch(this.watchId);
 	}
+
 	render(){
+
 		// const user_name = navigation.getParam('_id', '');
 		//this.webService();
 		return(
@@ -102,8 +105,10 @@ export default class MapScreen extends Component {
 				coordinate = {this.state.marker}
 				key={'markerID'}
 				title={'Clicked Marker'}>
-				<Callout  onPress={(e) => this.navigateAdd(e)}>
-					<Text>Yav bu nedir</Text>
+				<Callout  style={{alignItems: 'center', justifyContent:'center'}}onPress={(e) => this.navigateAdd(e)}>
+					<Text>Custom Marker</Text>
+					<Text>Please click here to add a new marker.</Text>
+
 				</Callout>
 				</Marker>
 			}
@@ -114,8 +119,10 @@ export default class MapScreen extends Component {
 						key={marker.id}
 						coordinate={{latitude: parseFloat(marker.lat), longitude: parseFloat(marker.lng)}}
 						title={marker.title}>
-							<Callout onPress={(e) => this.navigateEdit(e,marker)}>
-								<Text>{marker.description}</Text>
+							<Callout  onPress={(e) => this.navigateEdit(e,marker)}>
+								<Text style={{textAlign: 'center',fontWeight:'bold', margin: 5}}>{marker.title}</Text>
+								<Text style={{textAlign: 'left'}}>{marker.description}</Text>
+								<Text style={{marginTop:15,fontStyle:'italic'}}>Please click here to view marker details</Text>
 							</Callout>
 					</Marker>
 				))

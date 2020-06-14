@@ -1,7 +1,11 @@
-import React, {useEffect, useState, Component} from 'react';
+import React, {useEffect, useState, Component, useContext} from 'react';
 import { ActivityIndicator,TextInput, StyleSheet, FlatList, View, Text, Button, Alert, TouchableOpacity } from 'react-native';
 import { StackActions } from '@react-navigation/native';
+import {LocalizationContext} from '../services/localization/LocalizationContext';
+
 export default Register = ({navigation}) => {
+
+  const {translations} = useContext(LocalizationContext);
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [username, setUsername] = useState('');
@@ -9,6 +13,8 @@ export default Register = ({navigation}) => {
   const [email, setEmail] = useState('');
 
 function registration_Function (){
+
+
 
     fetch('http://192.168.0.113/React/v1/register.php', {
       method: 'POST',
@@ -30,7 +36,7 @@ function registration_Function (){
       .then((responseJson) => {
 
         Alert.alert(responseJson);
-        if(responseJson == 'User Registered Successfully'){
+        if(responseJson === 'User Registered Successfully'){
           navigation.dispatch(StackActions.popToTop());
         }
       }).catch((error) => {
@@ -46,21 +52,21 @@ function registration_Function (){
         <Text style={{ fontSize: 20, color: "#DD2C00", textAlign: 'center', marginBottom: 15 }}>User Registration</Text>
 
         <TextInput
-          placeholder="Enter User Name"
+          placeholder={translations.ENTER_NAME}
           onChangeText={text => setUsername(text)}
           underlineColorAndroid='transparent'
           style={styles.TextInputStyleClass}
         />
 
         <TextInput
-          placeholder="Enter User Email Address"
+          placeholder={translations.ENTER_MAIL}
           onChangeText={text => setEmail(text)}
           underlineColorAndroid='transparent'
           style={styles.TextInputStyleClass}
         />
 
         <TextInput
-          placeholder="Enter User Password"
+          placeholder={translations.ENTER_PASSWD}
           onChangeText={text => setPassword(text)}
           underlineColorAndroid='transparent'
           style={styles.TextInputStyleClass}
@@ -69,7 +75,7 @@ function registration_Function (){
 
         <TouchableOpacity style={styles.button} onPress={() => registration_Function()} >
 
-          <Text style={styles.text}> REGISTER </Text>
+          <Text style={styles.text}> {translations.REGISTER} </Text>
 
         </TouchableOpacity>
 

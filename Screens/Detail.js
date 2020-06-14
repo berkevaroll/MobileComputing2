@@ -1,9 +1,11 @@
-import React, {Component, useState, useEffect } from 'react';
+import React, {Component, useState, useEffect, useContext } from 'react';
 import { StyleSheet, Alert, TouchableOpacity, Platform, View, Text, Button, TextInput, Image, SafeAreaView, TouchableWithoutFeedback, FlatList } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 //import { StackActions } from '@react-navigation/native';
 import Realm from 'realm';
+import {LocalizationContext} from '../services/localization/LocalizationContext';
+
 
 let realm;
 //const Stack = createStackNavigator();
@@ -11,7 +13,7 @@ let realm;
 
 function Detail({ route, navigation }) {
 	const { id, title, content, location } = route.params;
-
+const {translations} = useContext(LocalizationContext);
 	function updateData(){
 		navigation.navigate('Update', {
 			id: id,
@@ -23,11 +25,11 @@ function Detail({ route, navigation }) {
 
 	function deleteData(){
 		Alert.alert(
-			'Info',
-			'Are you sure you want to delete this note?',
+			translations.INFO,
+			translations.DELETE_CONFIRM,
 			[
-				{text: 'No', onPress: () => console.log('Canceled'), style: 'cancel'},
-				{text: 'Yes', onPress: () => {deleteNote();}},
+				{text: translations.NO, onPress: () => console.log('Canceled'), style: 'cancel'},
+				{text: translations.YES, onPress: () => {deleteNote();}},
 			]
 		);
 	}
@@ -42,16 +44,16 @@ function Detail({ route, navigation }) {
 	return (
 		<View style={ styles.MainContainer }>
 			<View style={ styles.MainContainer }>
-				<Text style={ styles.TextInputStyle }>Title: {title}</Text>
-				<Text style={ styles.TextInputStyle }>Content: {content}</Text>
-				<Text style={ styles.TextInputStyle }>Location: {location}</Text>
+				<Text style={ styles.TextInputStyle }>{translations.TITLE}: {title}</Text>
+				<Text style={ styles.TextInputStyle }>{translations.CONTENT}: {content}</Text>
+				<Text style={ styles.TextInputStyle }>{translations.LOCATION}: {location}</Text>
 			</View>
 			<View style={ styles.Container}>
 				<TouchableOpacity onPress={updateData} style={styles.button}>
-					<Text> Update Note </Text>
+					<Text> {translations.UPDATE_NOTE} </Text>
 				</TouchableOpacity>
 				<TouchableOpacity onPress={deleteData} style={styles.button}>
-					<Text> Remove Note </Text>
+					<Text> {translations.REMOVE_NOTE} </Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -61,7 +63,9 @@ function Detail({ route, navigation }) {
 const styles = StyleSheet.create({
 	MainContainer:
 	{
+		backgroundColor:'#5AD8C8',
 		flex:1,
+		alignItems:'center',
 	},
 	Container:
 	{
@@ -76,12 +80,19 @@ const styles = StyleSheet.create({
 	TextInputStyle:
 	{
 		fontSize: 20,
+		color:"#543053",
+		margin: 20,
 	},
-	button:
-	{
-		alignItems: 'center',
-		fontSize: 2,
-	}
+	button: {
+
+	    color: 'black',
+	    fontSize: 24,
+	    alignItems: 'center',
+	  	borderColor: 'black',
+			alignSelf:'center',
+			borderWidth: 2,
+			borderRadius:20,
+  },
 });
 
 export default Detail;

@@ -1,10 +1,13 @@
-import React, {Component, useState, useEffect } from 'react';
-import { StyleSheet, Platform, View, Text, Button, TextInput, Image, SafeAreaView, TouchableWithoutFeedback, FlatList } from 'react-native';
+import React, {Component, useState, useEffect, useContext } from 'react';
+import { StyleSheet,Dimensions, Platform, View, Text, Button, TextInput, Image, SafeAreaView, TouchableWithoutFeedback, FlatList } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import {LocalizationContext} from '../services/localization/LocalizationContext';
 
 import Realm from 'realm';
+const window = Dimensions.get("window");
+const screen = Dimensions.get("screen");
 
 const realm = new Realm({
 	path: 'notes.realm',
@@ -47,16 +50,33 @@ function actionOnRow(item, navigation){
 }
 function NoteScreen({ navigation }) {
 
+	const {translations} = useContext(LocalizationContext);
+	const [dimensions, setDimensions] = useState({window,screen});
+  const onChange = ({window,screen}) => {
+    setDimensions({window,screen});
+  };
+  useEffect(() => {
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  });
 	const notes = getupdatedata(query);
 	return (
-		<View style={ styles.MainContainer }>
+		<View style={ dimensions.window.height > dimensions.window.width ? styles.MainContainer : styles.MainContainerL }>
 			<FlatList
 				data={notes}
 				keyExtractor={(item) => item.id}
 				renderItem={({ item }) => (
 					<TouchableWithoutFeedback onPress={ () => actionOnRow(item, navigation)}>
-						<View style={styles.line}>
+						<View style={dimensions.window.height > dimensions.window.width ? styles.line : styles.lineL}>
+						<Image
+						style={{width:70,height:70,marginRight:20,
+						}}
+						source={require('../images/note.png')}
+						/>
 							<View style={{flex: 1, flexDirection: 'column'}}>
+
 								<Text style={styles.texttitle}>{item.title}</Text>
 								<Text style={styles.textloc}>{item.location}</Text>
 							</View>
@@ -74,6 +94,14 @@ function NoteScreen({ navigation }) {
 const styles = StyleSheet.create({
 	MainContainer:
 	{
+		backgroundColor:'#C27346',
+		flex:1,
+		justifyContent: 'center',
+		paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
+	},
+	MainContainerL:
+	{
+		backgroundColor: '#43314E',
 		flex:1,
 		justifyContent: 'center',
 		paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
@@ -96,7 +124,15 @@ const styles = StyleSheet.create({
 	},
 	line:
 	{
-		backgroundColor: '#3cb371',
+		backgroundColor: '#72CB95',
+		margin: 5,
+		flex: 2,
+		padding: 10,
+		flexDirection: 'row',
+	},
+	lineL:
+	{
+		backgroundColor: '#1DC4F9',
 		margin: 5,
 		flex: 2,
 		padding: 10,

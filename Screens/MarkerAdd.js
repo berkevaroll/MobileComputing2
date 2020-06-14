@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect} from 'react';
+import React, { Component, useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   Image,
@@ -11,11 +11,14 @@ import {
 } from 'react-native';
 import styles  from './../stylesheet/styles1';
 import { StackActions } from '@react-navigation/native';
+import {LocalizationContext} from '../services/localization/LocalizationContext';
+
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 function MarkerAdd({navigation,route}) {
 
+	const {translations} = useContext(LocalizationContext);
   const {paramlng}=route.params;
   const{paramlat}=route.params;
   const{_markerid}=route.params;
@@ -23,7 +26,7 @@ function MarkerAdd({navigation,route}) {
   const [data, setData] = useState([]);
   const lng = paramlng;
   const lat = paramlat;
-  const userid = _markerid;
+  const userid = 555;
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   // const [lng, setLng] = useState(true);
@@ -55,7 +58,7 @@ function MarkerAdd({navigation,route}) {
       }).then((response) => response.json())
         .then((responseJson) => {
           Alert.alert(responseJson);
-          if(responseJson === 'Marker Added Successfully')
+          if(responseJson === 'Marker is Added Successfully')
            {
 
              navigation.dispatch(StackActions.replace('Map'));
@@ -77,20 +80,20 @@ function MarkerAdd({navigation,route}) {
       <View style={styles.part2}>
         <TextInput
           style={styles.textinput}
-          placeholder="Marker Title"
+          placeholder={translations.TITLE}
           onChangeText={text => setTitle(text)}
           defaultValue={title}
         />
         <TextInput
           style={styles.textinput}
-          placeholder="Marker Description"
+          placeholder={translations.DESCRIPTION}
           onChangeText={text => setDesc(text)}
           defaultValue={desc}
         />
         <View style={styles.buttonview}>
           <Button
             color="blue"
-            title="Add Marker"
+            title={translations.ADD_MARKER}
             onPress={() => addMarker()}
           />
 

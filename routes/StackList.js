@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
-
+import {LocalizationContext} from '../services/localization/LocalizationContext';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import List from './../Screens/NoteScreen';
@@ -12,12 +12,13 @@ import Update from './../Screens/Update';
 const Stack = createStackNavigator();
 
 function StackList({navigation}) {
+	const {translations} = useContext(LocalizationContext);
 	return(
 			<Stack.Navigator initialRouteName="List">
 				<Stack.Screen name="List"
 				 component={List}
 				 options={({ navigation }) => ({
-				 	title: 'My Notes',
+				 	title: translations.MY_NOTES,
 				 	headerLeft: null,
 				 	headerStyle:{
 				 		backgroundColor: '#ffdead',
@@ -30,7 +31,7 @@ function StackList({navigation}) {
 				 		<TouchableOpacity
 				 			style={styles.button}
 				 			onPress={() => navigation.navigate('Insert') }>
-				 			<Text>Add Note</Text>
+				 			<Text>{translations.ADD_NOTE}</Text>
 				 		</TouchableOpacity>
 				 	),
 				 })}
@@ -38,7 +39,7 @@ function StackList({navigation}) {
 				<Stack.Screen name="Insert"
 				 component={Insert}
 				 options={({ navigation }) => ({
-				 title: 'Add Note',
+				 title: translations.ADD_NOTE,
 				 headerLeft: null,
 			 	 headerStyle:{
 			 		backgroundColor: '#ffdead',
@@ -52,7 +53,7 @@ function StackList({navigation}) {
 				<Stack.Screen name="Detail"
 			 component={Details}
 			 options={({ navigation }) => ({
-			 title: 'Note Details',
+			 title: translations.NOTE_DETAILS,
 			 headerLeft: null,
 			 headerStyle:{
 				backgroundColor: '#ffdead',

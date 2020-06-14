@@ -1,4 +1,4 @@
-import React, { Component, useState} from 'react';
+import React, { Component, useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   Image,
@@ -7,18 +7,33 @@ import {
   Button,
   TextInput,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import styles  from './../stylesheet/styles1';
 import { StackActions } from '@react-navigation/native';
+import {LocalizationContext} from '../services/localization/LocalizationContext';
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+
+const window = Dimensions.get("window");
+const screen = Dimensions.get("screen");
 function Home({navigation}) {
 
+  const {translations} = useContext(LocalizationContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const [dimensions, setDimensions] = useState({window,screen});
+  const onChange = ({window,screen}) => {
+    setDimensions({window,screen});
+  };
+  useEffect(() => {
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  });
 
 function UserLoginFunction (){
 
@@ -59,44 +74,48 @@ fetch('http://192.168.0.113/React/v1/login.php', {
 
 
   return(
-	<View style={styles.body}>
-      <View style={styles.part1}>
+	<View style={dimensions.window.height > dimensions.window.width ? styles.bodyP : styles.bodyL}>
+      <View style={dimensions.window.height > dimensions.window.width ? styles.part1P : styles.part1L}>
       <Image
-          style={styles.image}
+          style={dimensions.window.height > dimensions.window.width ? styles.loginP : styles.loginL}
           source={require('../images/login.png')}
         />
       </View>
-      <View style={styles.part2}>
+      <View style={dimensions.window.height > dimensions.window.width ? styles.part2P : styles.part2L}>
         <TextInput
-          style={styles.textinput}
-          placeholder="Username"
+
+          placeholder={translations.USERNAME}
           onChangeText={text => setUsername(text)}
           defaultValue={username}
+          style={styles.TextInputStyleClass}
         />
         <TextInput
-          style={styles.textinput}
-          placeholder="Password"
+
+          placeholder={translations.PASSWD}
           onChangeText={text => setPassword(text)}
+          style={styles.TextInputStyleClass}
           defaultValue={password}
+          secureTextEntry={true}
         />
-        <View style={styles.buttonview}>
+        <View style={styles.buttonContainer}>
           <Button
-            color="blue"
-            title="Login"
+          style={styles.button}
+            color="orange"
+            title={translations.B_LOGIN}
             onPress={() => UserLoginFunction()}
           />
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')} >
+          <TouchableOpacity style={styles.buttonview} onPress={() => navigation.navigate('Register')} >
 
-            <Text style={styles.textopacity}> Don't have an account? Click here to register. </Text>
+            <Text style={styles.textopacity}> {translations.REGISTER_LINK} </Text>
 
           </TouchableOpacity>
         </View>
 
       </View>
-      <View style={styles.part3}>
+      <View style={dimensions.window.height > dimensions.window.width ? styles.part3P : styles.part3L}>
         <Button
           color="orange"
-          title="My Notes"
+          title={translations.MY_NOTES}
           onPress={() => navigation.navigate('DrawerRoute')}
         />
 

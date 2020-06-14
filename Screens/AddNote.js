@@ -1,16 +1,18 @@
-import React, {Component, useState, useEffect } from 'react';
+import React, {Component, useState, useEffect, useContext } from 'react';
 import { StyleSheet, TouchableOpacity, Platform, View, Text, Button, TextInput, Image, SafeAreaView, TouchableWithoutFeedback, FlatList } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StackActions } from '@react-navigation/native';
 import Realm from 'realm';
+import {LocalizationContext} from '../services/localization/LocalizationContext';
 
 let realm;
 const Stack = createStackNavigator();
 
 
 function AddNote({ navigation }) {
+	const {translations} = useContext(LocalizationContext);
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [city, setCity] = useState('');
@@ -42,25 +44,25 @@ function AddNote({ navigation }) {
 	return (
 		<View style={ styles.MainContainer }>
 			<TextInput
-				placeholder="Enter a title"
+				placeholder={translations.ENTER_TITLE}
 				style = { styles.TextInputStyle}
 				underlineColorAndroid = "transparent"
 				onChangeText={text => setTitle(text)}
 			/>
 			<TextInput
-				placeholder="Type your note"
+				placeholder={translations.TYPE_NOTE}
 				style = { styles.ContentInputType}
 				underlineColorAndroid = "transparent"
 				onChangeText={text => setContent(text)}
 			/>
 			<TextInput
-				placeholder="Insert a City"
+				placeholder={translations.INSERT_CITY}
 				style = { styles.TextInputStyle}
 				underlineColorAndroid = "transparent"
 				onChangeText={text => setCity(text)}
 			/>
 			<TouchableOpacity onPress={insert} style={styles.button}>
-				<Text> Add Note! </Text>
+				<Text> {translations.ADD_NOTE}</Text>
 			</TouchableOpacity>
 		</View>
 	);

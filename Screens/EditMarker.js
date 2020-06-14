@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect} from 'react';
+import React, { Component, useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   Image,
@@ -10,12 +10,14 @@ import {
   TouchableOpacity
 } from 'react-native';
 import styles  from './../stylesheet/styles1';
+import {LocalizationContext} from '../services/localization/LocalizationContext';
 import { StackActions } from '@react-navigation/native';
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 function EditMarker({navigation,route}) {
 
+  const {translations} = useContext(LocalizationContext);
   const {_title}=route.params;
   const{_desc}=route.params;
   const{_id}=route.params;
@@ -28,9 +30,6 @@ function EditMarker({navigation,route}) {
   // const [userid, setUserId] = useState('');
 
   function updateMarker (){
-
-      if(title == ''){setTitle(_title);}
-      if(desc == ''){setDesc(_desc);}
       fetch('http://192.168.0.113/React/v1/editmarker.php', {
         method: 'POST',
         headers: {
@@ -59,6 +58,11 @@ function EditMarker({navigation,route}) {
           console.error(error);
         });
     }
+    function checkEmpty(string){
+      if(string === ''){
+        setTitle(_title);
+      }
+    }
     function deleteMarker (){
 
         fetch('http://192.168.0.113/React/v1/deletemarker.php', {
@@ -78,7 +82,7 @@ function EditMarker({navigation,route}) {
             if(responseJson === 'Marker is Removed Successfully')
              {
 
-               navigation.dispatch(StackActions.replace('Map'));
+               navigation.dispatch(StackActions.replaces('Map'));
 
              }
           }).catch((error) => {
@@ -96,26 +100,28 @@ function EditMarker({navigation,route}) {
       </View>
       <View style={styles.part2}>
         <TextInput
-          label="Title"
+          textColor="black"
           style={styles.textinput}
           defaultValue={_title}
+
           onChangeText={text => setTitle(text)}
         />
         <TextInput
-          label="Description"
+          label={translations.DESCRIPTION}
+          options={{multiline:true}}
           style={styles.textinput}
           defaultValue={_desc}
           onChangeText={text => setDesc(text)}
         />
         <View style={styles.buttonview}>
           <Button
-            color="blue"
-            title="Update Marker"
+            color="darkorange"
+            title={translations.UPDATE_MARKER}
             onPress={() => updateMarker()}
           />
           <Button
-            color="blue"
-            title="Remove Marker"
+            color="darkgrey"
+            title={translations.REMOVE_MARKER}
             onPress={() => deleteMarker()}
           />
 

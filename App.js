@@ -9,6 +9,7 @@
 import * as React from'react';
 import Navigator from './routes/StackLogin';
 import { createStackNavigator } from '@react-navigation/stack';
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -16,4 +17,3 @@ export default function App() {
     <Navigator />
   );
 }
-
